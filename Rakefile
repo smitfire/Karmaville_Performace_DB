@@ -5,3 +5,15 @@
 require File.expand_path('../config/application', __FILE__)
 
 Karmaville::Application.load_tasks
+
+
+
+task :populate_karma => :environment do
+  users = User.all
+
+  users.each do |user|
+    user.karma_total = user.karma_points.sum(:value)
+    user.save
+  end
+end
+

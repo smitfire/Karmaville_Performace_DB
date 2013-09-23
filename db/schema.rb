@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130317221018) do
+ActiveRecord::Schema.define(:version => 20130923171913) do
 
   create_table "karma_points", :force => true do |t|
     t.integer  "user_id",    :null => false
@@ -19,15 +19,29 @@ ActiveRecord::Schema.define(:version => 20130317221018) do
     t.string   "label",      :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "username"
+    t.string   "email"
   end
 
+  add_index "karma_points", ["email"], :name => "index_karma_points_on_email"
+  add_index "karma_points", ["label"], :name => "index_karma_points_on_label"
+  add_index "karma_points", ["user_id"], :name => "index_karma_points_on_user_id"
+  add_index "karma_points", ["username"], :name => "index_karma_points_on_username"
+  add_index "karma_points", ["value"], :name => "index_karma_points_on_value"
+
   create_table "users", :force => true do |t|
-    t.string   "first_name",               :null => false
-    t.string   "last_name",                :null => false
-    t.string   "username",   :limit => 32, :null => false
-    t.string   "email",                    :null => false
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.string   "first_name",                :null => false
+    t.string   "last_name",                 :null => false
+    t.string   "username",    :limit => 32, :null => false
+    t.string   "email",                     :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "karma_total"
   end
+
+  add_index "users", ["email"], :name => "index_users_on_email"
+  add_index "users", ["first_name"], :name => "index_users_on_first_name"
+  add_index "users", ["karma_total"], :name => "index_users_on_karma_total"
+  add_index "users", ["last_name"], :name => "index_users_on_last_name"
 
 end
